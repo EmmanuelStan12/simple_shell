@@ -84,6 +84,8 @@ char **parse_cmd(char *cmd)
 		argv[i] = malloc(sizeof(char) * strlen(tokens));
 		if (argv[i] == NULL)
 		{
+			for (; i >= 0; i--)
+				free(argv[i]);
 			free(argv);
 			return (NULL);
 		}
