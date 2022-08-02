@@ -5,7 +5,7 @@
  * Description: a simple linux shell program
  * Return: 0 success
  */
-int main()
+int main(void)
 {
 	char *cmd;
 	char **argv;
