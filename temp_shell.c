@@ -8,13 +8,14 @@
  * @env: environment variable
  * Return: 0 success
  */
-int main(int argc, char *argv[], char **env)
+int main()
 {
 	char *cmd;
+	char **argv;
 
 	cmd = enter_command();
 	argv = parse_cmd(cmd);
-	_execve(argv, env);
+	_execve(argv);
 	return (0);
 }
 /**
@@ -26,7 +27,6 @@ char *enter_command(void)
 {
 	char *cmd, *buffer = NULL;
 	size_t n = 0;
-	int i = 0;
 
 	printf("✓™ ");
 	getline(&buffer, &n, stdin);
@@ -103,21 +103,21 @@ char **parse_cmd(char *cmd)
  * @env: environment variables
  * Return: void
  */
-void _execve(char **argv, char **env)
+void _execve(char **argv)
 {
-	int argc, status;
+	int status;
 	pid_t pid;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(argv[0], argv, env);
+		execve(argv[0], argv, NULL);
 		perror("unknown command");
 		exit(1);
 	}
 	else
 	{
 		wait(&status);
-		main(argc, argv, env);
+		main();
 	}
 }

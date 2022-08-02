@@ -11,6 +11,6 @@
 char *enter_command(void);
 int count_cmd(char *cmd);
 char **parse_cmd(char *cmd);
-void _execve(char **, char **);
+void _execve(char **argv);
 
 #endif
