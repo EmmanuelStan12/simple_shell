@@ -11,10 +11,8 @@
 int main(int argc, char *argv[], char **env)
 {
 	char *cmd;
-	int n, c;
 
 	cmd = enter_command();
-	n = count_cmd(cmd);
 	argv = parse_cmd(cmd);
 	_execve(argv, env);
 	return (0);
