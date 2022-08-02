@@ -3,9 +3,6 @@
 /**
  * main - Entry point
  * Description: a simple linux shell program
- * @argc: number arguments strings
- * @argv: strings of argument variable
- * @env: environment variable
  * Return: 0 success
  */
 int main()
@@ -100,7 +97,6 @@ char **parse_cmd(char *cmd)
 /**
  * _execve - executes command
  * @argv: argument variables with command in argv[0]
- * @env: environment variables
  * Return: void
  */
 void _execve(char **argv)
