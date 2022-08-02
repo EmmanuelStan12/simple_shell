@@ -1,6 +1,6 @@
 #include "shell.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char *argv[], char **env)
 {
 	char *cmd;
 	int n, c;
@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 	cmd = enter_command();
 	n = count_cmd(cmd);
 	argv = parse_cmd(cmd);
-	_execve(argv);
+	_execve(argv, env);
 	return (0);
 }
 /**
@@ -96,7 +96,7 @@ char **parse_cmd(char *cmd)
  * @argv: argument variables with command in argv[0]
  * Return: void
  */
-void _execve(char **argv)
+void _execve(char **argv, char **env)
 {
 	int argc, status;
 	pid_t pid;
@@ -104,13 +104,13 @@ void _execve(char **argv)
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(argv[0], argv, NULL);
+		execve(argv[0], argv, env);
 		perror("unknown command");
 		exit(1);
 	}
 	else
 	{
 		wait(&status);
-		main(argc, argv);
+		main(argc, argv, env);
 	}
 }
