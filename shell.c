@@ -28,15 +28,21 @@ int main(int argc, char **argv, char **env)
 		int i = 0, t_size;
 		char **tokens;
 
-		if (buffer == "exit\n")
-		{
-			printf("exit");
-			exit(0);
-		}
 		printf("[%s]~$ ", getenv(USER));
 		getline(&buffer, &buf_size, stdin);
 		t_size = token_size(buffer, delim);
 		tokens = tokenize(t_size, buffer, delim);
+
+		if (strcmp(tokens[0], "exit") == 0)
+		{
+			free(buffer);
+			free(paths);
+			exit(0);
+		}
+		else if (strcmp(tokens[0], "env") == 0)
+		{
+			print_env(env);
+		}
 		if (*buffer == '/')
 		{
 			_execve(tokens);

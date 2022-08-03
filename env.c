@@ -7,9 +7,12 @@
  */
 void print_env(char **args)
 {
-	while (*args != NULL)
+	int i;
+
+	i = 0;
+	while (args[i] != NULL)
 	{
-		printf("%s\n", *args);
-		(*args)++;
+		printf("%s\n", args[i]);
+		i++;
 	}
 }
