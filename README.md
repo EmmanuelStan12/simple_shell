@@ -1,8 +1,8 @@
-# Foobar
+# Simple Shell
 
 Simple Shell is a project that seeks to simulate the functionality of a real Bourne Again Shell
 
-## Installation
+## Compilation
 
 In order to compile the program run
 
