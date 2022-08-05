@@ -20,5 +20,10 @@ char *join_strings(char *first, char **tokens, char *delimiters);
 int token_size(char *str, char *delimiter);
 void print_env(char **args);
 char **tokenize(int size, char *path, char *delimiter);
+void free_ptr(char **ptr);
+int blank_input(char *buffer);
+int if_path(char *buffer);
+int check_env(char **tokens, char**env, char *buffer);
+int check_exit(char **tokens, char **paths, char *buffer);
 
 #endif

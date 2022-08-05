@@ -43,7 +43,7 @@ int main(int argc, char **argv, char **env)
 		{
 			print_env(env);
 		}
-		if (*buffer == '/')
+		if (buffer[0] == '/')
 		{
 			_execve(tokens);
 		}
@@ -62,7 +62,7 @@ int main(int argc, char **argv, char **env)
 			if (i != path_size)
 				_execve(tokens);
 			else
-				perror("command not found...\n");
+			perror("command not found...\n");
 		}
 	}
 	return (0);
