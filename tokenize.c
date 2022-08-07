@@ -3,7 +3,9 @@
 /**
  * tokenize - get the path strings
  * @size: number of path variables
- * @path: full string path joined by a delimiter
+ * @path: full string path joined by ':'
+ * @delimiter: string seperator
+>>>>>>> origin/master
  * Return: the pointer to the array of the path variables
  */
 char **tokenize(int size, char *path, char *delimiter)

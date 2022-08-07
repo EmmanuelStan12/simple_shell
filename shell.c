@@ -9,61 +9,32 @@
  */
 int main(int argc, char **argv, char **env)
 {
-	char *buffer, **paths, *path, *delim = " \n\t\r:";
-	int path_size;
+	char *buffer, **paths, *path,  *command = NULL, *delim = " \n\t\r:";
+	int path_size, i, n;
 	size_t buf_size;
 
-	buf_size = 1;
 	path = getenv(PATH);
 	path_size = token_size(path, ":");
 	paths = tokenize(path_size, path, ":");
-	buffer = malloc(buf_size * sizeof(*buffer));
-	if (buffer == NULL)
-	{
-		free(paths);
-		return (1);
-	}
 	while (1)
 	{
-		int i = 0, t_size;
-		char **tokens;
+		printf("Emma_et_Muna[%s]✓✓™ ", getenv(USER));
+		n = getline(&buffer, &buf_size, stdin);
+		if (strlen(buffer) == 1 && (n != -1))
+			continue;
+		argc = token_size(buffer, delim);
+		argv = tokenize(argc, buffer, delim);
 
-		printf("[%s]~$ ", getenv(USER));
-		getline(&buffer, &buf_size, stdin);
-		t_size = token_size(buffer, delim);
-		tokens = tokenize(t_size, buffer, delim);
-
-		if (strcmp(tokens[0], "exit") == 0)
+		i = checks(argv, env, buffer);
+		if (i == 1)
+			continue;
+		else if (i == 0)
 		{
-			free(buffer);
-			free(paths);
-			exit(0);
+			command = get_path(paths, argv);
+			if (command != NULL)
+				argv[0] = strdup(command);
 		}
-		else if (strcmp(tokens[0], "env") == 0)
-		{
-			print_env(env);
-		}
-		if (*buffer == '/')
-		{
-			_execve(tokens);
-		}
-		else
-		{
-			char *command;
-			while (i < path_size)
-			{
-				command = append_path(paths[i], tokens[0]);
-				if (access(command, F_OK | X_OK) == 0)
-					break;
-				free(command);
-				i++;
-			}
-			tokens[0] = command;
-			if (i != path_size)
-				_execve(tokens);
-			else
-				perror("command not found...\n");
-		}
+		_execve(argv);
 	}
 	return (0);
 }
