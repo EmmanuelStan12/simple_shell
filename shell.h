@@ -27,6 +27,7 @@ int check_env(char **tokens, char**env, char *buffer);
 int check_exit(char **tokens, char **paths, char *buffer);
 void free_ptr(char **ptr);
 char *get_path(char **paths, char **tokens);
-int checks(char **tokens, char **env, char **paths, char *buffer);
+int checks(char **tokens, char **env, char *buffer);
+int ch_dir(char **token);
 
 #endif

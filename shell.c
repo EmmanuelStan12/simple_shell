@@ -25,7 +25,7 @@ int main(int argc, char **argv, char **env)
 		argc = token_size(buffer, delim);
 		argv = tokenize(argc, buffer, delim);
 
-		i = checks(argv, env, paths, buffer);
+		i = checks(argv, env, buffer);
 		if (i == 1)
 			continue;
 		else if (i == 0)

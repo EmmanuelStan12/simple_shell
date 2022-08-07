@@ -4,23 +4,21 @@
 * checks - checks for exit, path command, and env commands
 * @tokens: tokenized input from user
 * @env: environment variable
-* @paths: directories in the path
 * @buffer: user's input
 * Return: 0, 1, 0r 2
 */
-int checks(char **tokens, char **env, char **paths, char *buffer)
+int checks(char **tokens, char **env, char *buffer)
 {
-	int i, j;
+	int i, j, k;
 
 	if (feof(stdin))
 		_exit(98);
 	i = strcmp(tokens[0], "exit");
 	j = strcmp(tokens[0], "env");
+	k = strcmp(tokens[0], "cd");
 	if (i == 0)
 	{
 		free(buffer);
-		free_ptr(paths);
-		free_ptr(tokens);
 		_exit(127);
 	}
 	else if (j == 0)
@@ -28,10 +26,14 @@ int checks(char **tokens, char **env, char **paths, char *buffer)
 		print_env(env);
 		return (1);
 	}
+	else if (k == 0)
+	{
+		if (ch_dir(tokens) == 1)
+		return (1);
+	}
 	else if (buffer[0] == '/')
 		return (2);
-	else
-		return (0);
+	return (0);
 }
 /**
 * get_path - gets the path of a given command
@@ -88,4 +90,26 @@ void free_ptr(char **ptr)
 		i++;
 	}
 	free(ptr);
+}
+/**
+* ch_dir - function that changes the working directory
+* @token: contains the directory path
+* Return: 1 0n success
+*/
+int ch_dir(char **token)
+{
+	const char *dir = NULL;
+	char *buf = NULL;
+	size_t size = 1024;
+
+	if (token[1] == NULL)
+		dir = getcwd(buf, size);
+	else
+		dir = token[1];
+	if (chdir(dir) == -1)
+	{
+		perror(dir);
+		return (0);
+	}
+	return (1);
 }
