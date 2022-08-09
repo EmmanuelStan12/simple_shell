@@ -29,5 +29,6 @@ void free_ptr(char **ptr);
 char *get_path(char **paths, char **tokens);
 int checks(char **tokens, char **env, char *buffer);
 int ch_dir(char **token);
+void prompt(void);
 
 #endif

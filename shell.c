@@ -18,7 +18,7 @@ int main(int argc, char **argv, char **env)
 	paths = tokenize(path_size, path, ":");
 	while (1)
 	{
-		printf("Emma_et_Muna[%s]✓✓™ ", getenv(USER));
+		prompt();
 		n = getline(&buffer, &buf_size, stdin);
 		if (strlen(buffer) == 1 && (n != -1))
 			continue;
