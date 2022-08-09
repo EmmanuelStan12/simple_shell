@@ -3,19 +3,20 @@
 /**
 * checks - checks for exit, path command, and env commands
 * @tokens: tokenized input from user
-* @env: environment variable
 * @buffer: user's input
-* Return: 0, 1, 0r 2
+* Return: 0, 1 Or 2
 */
-int checks(char **tokens, char **env, char *buffer)
+int checks(char **tokens, char *buffer)
 {
-	int i, j, k;
+	int i, j, k, e, u;
 
 	if (feof(stdin))
 		_exit(98);
 	i = strcmp(tokens[0], "exit");
 	j = strcmp(tokens[0], "env");
 	k = strcmp(tokens[0], "cd");
+	e = strcmp(tokens[0], "setenv");
+	u = strcmp(tokens[0], "unsetenv");
 	if (i == 0)
 	{
 		free(buffer);
@@ -23,7 +24,7 @@ int checks(char **tokens, char **env, char *buffer)
 	}
 	else if (j == 0)
 	{
-		print_env(env);
+		print_env();
 		return (1);
 	}
 	else if (k == 0)
@@ -33,6 +34,18 @@ int checks(char **tokens, char **env, char *buffer)
 	}
 	else if (buffer[0] == '/')
 		return (2);
+	else if (e == 0)
+	{
+		if (_setenv(tokens) != 0)
+			perror("Invalid arguments...");
+		return (1);
+	}
+	else if (u == 0)
+	{
+		if (_unsetenv(tokens) != 0)
+			perror("Invalid arguments...");
+		return (1);
+	}
 	return (0);
 }
 /**

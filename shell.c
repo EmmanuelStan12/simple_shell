@@ -7,7 +7,7 @@
  * @env: environmental variables
  * Return: the status
  */
-int main(int argc, char **argv, char **env)
+int main(int argc, char **argv)
 {
 	char *buffer, **paths, *path,  *command = NULL, *delim = " \n\t\r:";
 	int path_size, i, n;
@@ -25,7 +25,7 @@ int main(int argc, char **argv, char **env)
 		argc = token_size(buffer, delim);
 		argv = tokenize(argc, buffer, delim);
 
-		i = checks(argv, env, buffer);
+		i = checks(argv, buffer);
 		if (i == 1)
 			continue;
 		else if (i == 0)

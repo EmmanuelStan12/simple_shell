@@ -5,14 +5,15 @@
  * @args: environmental variables
  * Return: void
  */
-void print_env(char **args)
+void print_env(void)
 {
+	char **env = environ;
 	int i;
 
 	i = 0;
-	while (args[i] != NULL)
+	while (env[i] != NULL)
 	{
-		printf("%s\n", args[i]);
+		printf("%s\n", env[i]);
 		i++;
 	}
 }
