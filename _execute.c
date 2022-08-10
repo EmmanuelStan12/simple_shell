@@ -5,7 +5,7 @@
  * @argv: argument variables with command in argv[0]
  * Return: void
  */
-void _execve(char **argv)
+int _execve(char **argv)
 {
 	int status;
 	pid_t pid;
@@ -13,7 +13,7 @@ void _execve(char **argv)
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(argv[0], argv, NULL);
+		status = execve(argv[0], argv, NULL);
 		perror("unknown command");
 		exit(1);
 	}
@@ -21,4 +21,5 @@ void _execve(char **argv)
 	{
 		wait(&status);
 	}
+	return (status);
 }
