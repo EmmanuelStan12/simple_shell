@@ -52,7 +52,7 @@ int Ex_it(char *str)
 	if (flag == -1)
 	{
 		write(STDERR_FILENO, "invalid number: argument should be of type int\n", 47);
-		return(1);
+		return (1);
 	}
 	_exit(code);
 	return (0);

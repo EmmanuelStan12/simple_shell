@@ -4,7 +4,6 @@
  * main - Entry point
  * @argc: the number of arguments
  * @argv: the arguments
- * @env: environmental variables
  * Return: the status
  */
 int main(int argc, char **argv)
