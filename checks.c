@@ -12,6 +12,8 @@ int checks(char **tokens, char *buffer)
 
 	if (feof(stdin))
 		_exit(98);
+	if (tokens[0] == NULL)
+		return (1);
 	i = strcmp(tokens[0], "exit");
 	j = strcmp(tokens[0], "env");
 	k = strcmp(tokens[0], "cd");
@@ -19,8 +21,8 @@ int checks(char **tokens, char *buffer)
 	u = strcmp(tokens[0], "unsetenv");
 	if (i == 0)
 	{
-		free(buffer);
-		_exit(127);
+		if (Ex_it(tokens[1]) == 1)
+			return (1);
 	}
 	else if (j == 0)
 	{
