@@ -14,18 +14,16 @@ gcc *.c -o shell
 
 ```
 #list files in current directory
-[codedev]~$ ls
+[$USER]~$ ls
 README.md   append_path.c  join_strings.c  shell.c  temp_shell    tokenize.c
-_execute.c  env.c          shell           shell.h  token_size.c
 
 # run the command with the full directory of the command
-[codedev]~$ /bin/ls
+[$USER]~$ /bin/ls
 README.md   append_path.c  join_strings.c  shell.c  temp_shell    tokenize.c
-_execute.c  env.c          shell           shell.h  token_size.c
 
 # echo command
-[codedev]~$ echo "Hello World"
-"Hello World"
+[$USER]~$ echo Hello
+Hello
 ```
 
 ## Contributing

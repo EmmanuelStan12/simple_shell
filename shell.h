@@ -9,6 +9,9 @@
 
 #define PATH "PATH"
 #define USER "USER"
+#define PWD "PWD"
+#define OLDPWD "OLDPWD"
+#define HOME "HOME"
 
 extern char **environ;
 
@@ -35,5 +38,7 @@ int _unsetenv(char **tokens);
 char*** _seperator(char **paths, char *args, char *seperator, char *delim);
 char _is_seperator(char *args);
 void _execute_seperators(char **paths, char *buffer, char seperator, char *delim);
+int Ex_it(char *str);
+int _atoi(char *num);
 
 #endif
