@@ -4,14 +4,13 @@
  * main - Entry point
  * @argc: the number of arguments
  * @argv: the arguments
- * @env: environmental variables
  * Return: the status
  */
 int main(int argc, char **argv)
 {
-	char *buffer, **paths, *path,  *command = NULL, *delim = " \n\t\r:";
+	char *buffer = NULL, **paths, *path,  *command = NULL, *delim = " \n\t\r:";
 	int path_size, i, n;
-	size_t buf_size;
+	size_t buf_size = 0;
 
 	path = getenv(PATH);
 	path_size = token_size(path, ":");
