@@ -9,6 +9,9 @@
 
 #define PATH "PATH"
 #define USER "USER"
+#define PWD "PWD"
+#define OLDPWD "OLDPWD"
+#define HOME "HOME"
 
 extern char **environ;
 
@@ -32,5 +35,7 @@ int ch_dir(char **token);
 void prompt(void);
 int _setenv(char **tokens);
 int _unsetenv(char **tokens);
+int Ex_it(char *str);
+int _atoi(char *num);
 
 #endif

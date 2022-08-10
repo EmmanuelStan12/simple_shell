@@ -2,7 +2,6 @@
 
 /**
  * print_env - prints the environmental variables
- * @args: environmental variables
  * Return: void
  */
 void print_env(void)

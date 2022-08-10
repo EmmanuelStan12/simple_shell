@@ -48,17 +48,25 @@ char *get_path(char **paths, char **tokens)
 int ch_dir(char **token)
 {
 	const char *dir = NULL;
-	char *buf = NULL;
+	char *buf = NULL, *current = NULL;
 	size_t size = 1024;
 
+	buf = getcwd(buf, size);
 	if (token[1] == NULL)
-		dir = getcwd(buf, size);
+		dir = getenv(HOME);
+	else if ((strcmp(token[1], "-")) == 0)
+	{
+		dir = getenv(OLDPWD);
+	}
 	else
 		dir = token[1];
 	if (chdir(dir) == -1)
 	{
 		perror(dir);
-		return (0);
+		return (1);
 	}
+	current = getcwd(current, size);
+	setenv(PWD, current, 1);
+	setenv(OLDPWD, buf, 1);
 	return (1);
 }
