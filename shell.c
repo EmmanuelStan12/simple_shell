@@ -17,23 +17,33 @@ int main(int argc, char **argv)
 	paths = tokenize(path_size, path, ":");
 	while (1)
 	{
+		char seperator;
+
 		prompt();
 		n = getline(&buffer, &buf_size, stdin);
 		if (strlen(buffer) == 1 && (n != -1))
 			continue;
-		argc = token_size(buffer, delim);
-		argv = tokenize(argc, buffer, delim);
-
-		i = checks(argv, buffer);
-		if (i == 1)
-			continue;
-		else if (i == 0)
+		seperator = _is_seperator(buffer);
+		if (seperator == '\0')
 		{
-			command = get_path(paths, argv);
-			if (command != NULL)
-				argv[0] = strdup(command);
+		
+			argc = token_size(buffer, delim);
+			argv = tokenize(argc, buffer, delim);
+			i = checks(argv, buffer);
+			if (i == 1)
+				continue;
+			else if (i == 0)
+			{
+				command = get_path(paths, argv);
+				if (command != NULL)
+					argv[0] = strdup(command);
+			}
+			_execve(argv);
 		}
-		_execve(argv);
+		else
+		{
+			_execute_seperators(paths, buffer, seperator, delim);
+		}
 	}
 	return (0);
 }

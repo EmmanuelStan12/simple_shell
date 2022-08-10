@@ -19,7 +19,7 @@ void print_env(void);
 char *enter_command(void);
 int count_cmd(char *cmd);
 char **parse_cmd(char *cmd);
-void _execve(char **argv);
+int _execve(char **argv);
 char *append_path(char *path, char *command);
 char *join_strings(char *first, char **tokens, char *delimiters);
 int token_size(char *str, char *delimiter);
@@ -35,6 +35,9 @@ int ch_dir(char **token);
 void prompt(void);
 int _setenv(char **tokens);
 int _unsetenv(char **tokens);
+char*** _seperator(char **paths, char *args, char *seperator, char *delim);
+char _is_seperator(char *args);
+void _execute_seperators(char **paths, char *buffer, char seperator, char *delim);
 int Ex_it(char *str);
 int _atoi(char *num);
 
