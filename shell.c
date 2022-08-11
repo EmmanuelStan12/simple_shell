@@ -25,7 +25,7 @@ void s_shell(int i, char **paths, char **argv)
 		}
 		else
 		{
-			sh_command_err(argv);
+			perror(argv[0]);
 			return;
 		}
 	}
@@ -33,7 +33,7 @@ void s_shell(int i, char **paths, char **argv)
 	{
 		if (access(argv[0], F_OK | X_OK) != 0)
 		{
-			sh_command_err(argv);
+			argv[0] = strdup(command);
 			free(argv);
 			return;
 		}
