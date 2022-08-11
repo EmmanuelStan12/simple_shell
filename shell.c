@@ -71,7 +71,11 @@ int main(int argc, char **argv)
 		i = checks(argv, buffer, paths);
 		s_shell(i, paths, argv);
 		if (int_mode != 1)
+		{
+			free(buffer);
+			free_ptr(paths);
 			exit(0);
+		}
 	}
 	printf("print");
 	free_ptr(paths);
