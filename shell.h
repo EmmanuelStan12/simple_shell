@@ -12,7 +12,7 @@
 #define PWD "PWD"
 #define OLDPWD "OLDPWD"
 #define HOME "HOME"
-#define COMMAND_NOT_FOUND "./shell: No such file or directory"
+#define COMMAND_NOT_FOUND "No such file or directory"
 
 extern char **environ;
 

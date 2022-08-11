@@ -8,17 +8,27 @@
  */
 int token_size(char *str, char *delimiter)
 {
-	int size;
+	int size, flag = 0;
 	char *buffer, *holder;
 
-	size = 0;
+	size = 1;
 	buffer = strdup(str);
 	holder = buffer;
-	while ((buffer = strtok(buffer, delimiter)) != NULL)
+	while (*holder == ' ')
+		holder++;
+	while (*holder)
 	{
-		size++;
-		buffer = NULL;
+		if (strchr(delimiter, *holder) != NULL && flag == 0)
+		{
+			size++;
+			flag = 1;
+		}
+		else if (strchr(delimiter, *holder) == NULL && flag == 1)
+		{
+			flag = 0;
+		}
+		holder++;
 	}
-	free(holder);
+	free(buffer);
 	return (size);
 }
