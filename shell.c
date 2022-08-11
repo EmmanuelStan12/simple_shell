@@ -51,19 +51,30 @@ void handle_terminal(char **argv)
 {
 	int i;
 	char **command;
+	DIR* dir;
 
 	i = 0;
-	while (argv[i])
+	dir = opendir(argv[1]);
+	if (dir)
 	{
-		command = malloc(sizeof(char *) * 2);
-		command[0] = argv[i];
-		command[1] = NULL;
-		_execve(command);
-		free(argv[i]);
-		free(command);
-		i++;
+		_execve(argv);
+		closedir(dir);
+		free_ptr(argv);
 	}
-	free(argv);
+	else
+	{
+		while (argv[i])
+		{
+			command = malloc(sizeof(char *) * 2);
+			command[0] = argv[i];
+			command[1] = NULL;
+			_execve(command);
+			free(argv[i]);
+			free(command);
+			i++;
+		}
+		free(argv);
+	}
 }
 
 /**
