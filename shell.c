@@ -1,15 +1,14 @@
 #include "shell.h"
 
-char *filename;
-
 /**
  * s_shell - part of the main shell
  * @i: index
  * @paths: env paths
  * @argv: arguments
+ * @filename: the name of the file
  * Return: void
  */
-void s_shell(int i, char **paths, char **argv)
+void s_shell(char *filename, int i, char **paths, char **argv)
 {
 	char *command;
 
@@ -51,10 +50,11 @@ void handle_terminal(char **argv)
 {
 	int i;
 	char **command;
-	DIR* dir;
+	DIR *dir = NULL;
 
 	i = 0;
-	dir = opendir(argv[1]);
+	if (argv[1])
+		dir = opendir(argv[1]);
 	if (dir)
 	{
 		_execve(argv);
@@ -88,8 +88,8 @@ int main(int argc, char **argv)
 	char *buffer = NULL, **paths, *path, *delim = " \n\t\r:";
 	int path_size, i, n, int_mode = 1;
 	size_t buf_size = 0;
+	char *filename = argv[0];
 
-	filename = argv[0];
 	path = getenv(PATH);
 	path_size = token_size(path, ":");
 	paths = tokenize(path_size, path, ":");
@@ -98,7 +98,8 @@ int main(int argc, char **argv)
 		int_mode = isatty(STDIN_FILENO);
 		if (int_mode == 1)
 			printf("[%s]$ ", getenv("USER"));
-		n = getline(&buffer, &buf_size, stdin);
+		n = getdelim(&buffer, &buf_size, '\0', stdin);
+		buffer = analyze_string(buffer);
 		if (strlen(buffer) == 1 && (n != -1))
 			continue;
 		argc = token_size(buffer, delim);
@@ -106,7 +107,7 @@ int main(int argc, char **argv)
 		if (int_mode == 1)
 		{
 			i = checks(argv, buffer, paths);
-			s_shell(i, paths, argv);
+			s_shell(filename, i, paths, argv);
 		}
 		else
 		{

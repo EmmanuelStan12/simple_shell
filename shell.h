@@ -8,6 +8,7 @@
 #include <sys/wait.h>
 #include <dirent.h>
 #include <errno.h>
+#include <ctype.h>
 
 #define PATH "PATH"
 #define USER "USER"
@@ -44,5 +45,6 @@ void _execute_seperators(char **paths, char *buffer, char sp, char *delim);
 int Ex_it(char *str);
 int _atoi(char *num);
 void clean_execution(char **args);
+char *analyze_string(char *buffer);
 
 #endif
