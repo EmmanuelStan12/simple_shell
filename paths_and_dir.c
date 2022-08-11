@@ -37,6 +37,7 @@ char *get_path(char **paths, char **tokens)
 		path[len + 1] = '\0';
 		if (access(path, F_OK | X_OK) == 0)
 			return (path);
+		free(path);
 	}
 	return (NULL);
 }

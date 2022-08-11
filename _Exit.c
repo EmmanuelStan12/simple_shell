@@ -36,8 +36,7 @@ int Ex_it(char *str)
 	dup = str;
 	if (str == NULL)
 	{
-		write(STDERR_FILENO, "put number: usage: exit [int]\n", 30);
-		return (1);
+		return (127);
 	}
 	while (dup[i])
 	{
@@ -54,6 +53,5 @@ int Ex_it(char *str)
 		write(STDERR_FILENO, "invalid number: argument should be of type int\n", 47);
 		return (1);
 	}
-	_exit(code);
-	return (0);
+	return (code);
 }

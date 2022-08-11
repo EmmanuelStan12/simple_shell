@@ -13,7 +13,7 @@ int _execve(char **argv)
 	pid = fork();
 	if (pid == 0)
 	{
-		status = execve(argv[0], argv, NULL);
+		status = execve(argv[0], argv, environ);
 		perror("unknown command");
 		exit(1);
 	}

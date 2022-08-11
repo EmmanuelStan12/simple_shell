@@ -1,6 +1,46 @@
 #include "shell.h"
 
 /**
+ * sub_shell - part of the main shell
+ * @i: index
+ * @paths: env paths
+ * @argv: arguments
+ * Return: void
+ */
+void s_shell(int i, char **paths, char **argv)
+{
+	char *command;
+
+	if (i == 1)
+		return;
+	else if (i == 0)
+	{
+		command = get_path(paths, argv);
+		if (command != NULL)
+		{
+			argv[0] = strdup(command);
+			free(command);
+		}
+		else
+		{
+			perror(COMMAND_NOT_FOUND);
+			return;
+		}
+	}
+	else if (i == 2)
+	{
+		if (access(argv[0], F_OK | X_OK) != 0)
+		{
+			free(argv);
+			perror(COMMAND_NOT_FOUND);
+			return;
+		}
+	}
+	_execve(argv);
+	clean_execution(argv);
+}
+
+/**
  * main - Entry point
  * @argc: the number of arguments
  * @argv: the arguments
@@ -26,24 +66,13 @@ int main(int argc, char **argv)
 		seperator = _is_seperator(buffer);
 		if (seperator == '\0')
 		{
-		
 			argc = token_size(buffer, delim);
 			argv = tokenize(argc, buffer, delim);
-			i = checks(argv, buffer);
-			if (i == 1)
-				continue;
-			else if (i == 0)
-			{
-				command = get_path(paths, argv);
-				if (command != NULL)
-					argv[0] = strdup(command);
-			}
-			_execve(argv);
+			i = checks(argv, buffer, paths);
+			s_shell(i, paths, argv);
 		}
 		else
-		{
 			_execute_seperators(paths, buffer, seperator, delim);
-		}
 	}
 	return (0);
 }
