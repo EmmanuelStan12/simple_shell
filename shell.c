@@ -1,5 +1,7 @@
 #include "shell.h"
 
+char *filename;
+
 /**
  * s_shell - part of the main shell
  * @i: index
@@ -23,7 +25,7 @@ void s_shell(int i, char **paths, char **argv)
 		}
 		else
 		{
-			perror(COMMAND_NOT_FOUND);
+			printf("%s: %s\n", filename, COMMAND_NOT_FOUND);
 			return;
 		}
 	}
@@ -31,8 +33,8 @@ void s_shell(int i, char **paths, char **argv)
 	{
 		if (access(argv[0], F_OK | X_OK) != 0)
 		{
-			free(argv);
-			perror(COMMAND_NOT_FOUND);
+			free_ptr(argv);
+			printf("%s: %s\n", filename, COMMAND_NOT_FOUND);
 			return;
 		}
 	}
@@ -52,10 +54,10 @@ int main(int argc, char **argv)
 	int path_size, i, n;
 	size_t buf_size = 0;
 
+	filename = argv[0];
 	path = getenv(PATH);
 	path_size = token_size(path, ":");
 	paths = tokenize(path_size, path, ":");
-	
 	while (1)
 	{
 		printf("[%s]$ ", getenv("USER"));

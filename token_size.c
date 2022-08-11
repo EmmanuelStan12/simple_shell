@@ -30,6 +30,5 @@ int token_size(char *str, char *delimiter)
 		holder++;
 	}
 	free(buffer);
-	printf("size: %d\n", size);
 	return (size);
 }

@@ -16,7 +16,7 @@ int checks(char **tokens, char *buffer, char **paths)
 	if (strcmp(tokens[0], "exit") == 0)
 	{
 		free(buffer);
-		free_ptr(paths);	
+		free_ptr(paths);
 		free_ptr(tokens);
 		exit(127);
 	}
