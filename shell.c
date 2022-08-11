@@ -43,6 +43,30 @@ void s_shell(int i, char **paths, char **argv)
 }
 
 /**
+ * handle_terminal - handles terminal input
+ * @argv: arguments
+ * Return: void
+ */
+void handle_terminal(char **argv)
+{
+	int i;
+	char **command;
+
+	i = 0;
+	while (argv[i])
+	{
+		command = malloc(sizeof(char *) * 2);
+		command[0] = argv[i];
+		command[1] = NULL;
+		_execve(command);
+		free(argv[i]);
+		free(command);
+		i++;
+	}
+	free(argv);
+}
+
+/**
  * main - Entry point
  * @argc: the number of arguments
  * @argv: the arguments
@@ -68,16 +92,19 @@ int main(int argc, char **argv)
 			continue;
 		argc = token_size(buffer, delim);
 		argv = tokenize(argc, buffer, delim);
-		i = checks(argv, buffer, paths);
-		s_shell(i, paths, argv);
-		if (int_mode != 1)
+		if (int_mode == 1)
 		{
+			i = checks(argv, buffer, paths);
+			s_shell(i, paths, argv);
+		}
+		else
+		{
+			handle_terminal(argv);
 			free(buffer);
 			free_ptr(paths);
 			exit(0);
 		}
 	}
-	printf("print");
 	free_ptr(paths);
 	return (0);
 }

@@ -11,12 +11,10 @@ int token_size(char *str, char *delimiter)
 	int size, flag = 0;
 	char *buffer, *holder;
 
-	size = 1;
+	size = 0;
 	buffer = strdup(str);
 	holder = buffer;
-	while (*holder == ' ')
-		holder++;
-	while (*holder)
+	while (*holder != '\0' && *holder != EOF)
 	{
 		if (strchr(delimiter, *holder) != NULL && flag == 0)
 		{
@@ -29,6 +27,9 @@ int token_size(char *str, char *delimiter)
 		}
 		holder++;
 	}
+	holder--;
+	if (strchr(delimiter, *holder) == NULL)
+		size++;
 	free(buffer);
 	return (size);
 }
