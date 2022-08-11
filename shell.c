@@ -51,7 +51,7 @@ void s_shell(int i, char **paths, char **argv)
 int main(int argc, char **argv)
 {
 	char *buffer = NULL, **paths, *path, *delim = " \n\t\r:";
-	int path_size, i, n;
+	int path_size, i, n, int_mode = 1;
 	size_t buf_size = 0;
 
 	filename = argv[0];
@@ -60,7 +60,9 @@ int main(int argc, char **argv)
 	paths = tokenize(path_size, path, ":");
 	while (1)
 	{
-		printf("[%s]$ ", getenv("USER"));
+		int_mode = isatty(STDIN_FILENO);
+		if (int_mode == 1)
+			printf("[%s]$ ", getenv("USER"));
 		n = getline(&buffer, &buf_size, stdin);
 		if (strlen(buffer) == 1 && (n != -1))
 			continue;
@@ -68,7 +70,10 @@ int main(int argc, char **argv)
 		argv = tokenize(argc, buffer, delim);
 		i = checks(argv, buffer, paths);
 		s_shell(i, paths, argv);
+		if (int_mode != 1)
+			exit(0);
 	}
+	printf("print");
 	free_ptr(paths);
 	return (0);
 }
