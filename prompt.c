@@ -11,7 +11,7 @@ void prompt(void)
 
 	w_dir = getcwd(buff, 150);
 	len = strlen(w_dir);
-	write(STDOUT_FILENO, "Emma_et_Muna[", 13);
+	write(STDOUT_FILENO, "[", 2);
 	write(STDOUT_FILENO, w_dir, len);
 	write(STDOUT_FILENO, "] ", 2);
 }

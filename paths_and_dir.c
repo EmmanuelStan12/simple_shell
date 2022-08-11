@@ -39,7 +39,7 @@ char *get_path(char **paths, char **tokens)
 			return (path);
 		free(path);
 	}
-	return (NULL);
+	return ("NULL");
 }
 /**
 * ch_dir - function that changes the working directory
@@ -68,7 +68,7 @@ int ch_dir(char **token)
 	}
 	if (chdir(dir) == -1)
 	{
-		perror(dir);
+		sh_command_err(token);
 		return (1);
 	}
 	current = getcwd(current, size);

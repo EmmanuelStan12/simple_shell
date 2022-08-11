@@ -18,14 +18,14 @@ void s_shell(int i, char **paths, char **argv)
 	else if (i == 0)
 	{
 		command = get_path(paths, argv);
-		if (command != NULL)
+		if (strcmp(command, "NULL") != 0)
 		{
 			argv[0] = strdup(command);
 			free(command);
 		}
 		else
 		{
-			perror(argv[0]);
+			sh_command_err(argv);
 			return;
 		}
 	}
@@ -33,7 +33,7 @@ void s_shell(int i, char **paths, char **argv)
 	{
 		if (access(argv[0], F_OK | X_OK) != 0)
 		{
-			argv[0] = strdup(command);
+			sh_command_err(argv);
 			free(argv);
 			return;
 		}
