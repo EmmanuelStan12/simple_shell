@@ -12,6 +12,7 @@
 #define PWD "PWD"
 #define OLDPWD "OLDPWD"
 #define HOME "HOME"
+#define COMMAND_NOT_FOUND "./shell: No such file or directory"
 
 extern char **environ;
 
@@ -30,7 +31,7 @@ int if_path(char *buffer);
 int check_exit(char **tokens, char **paths, char *buffer);
 void free_ptr(char **ptr);
 char *get_path(char **paths, char **tokens);
-int checks(char **tokens, char *buffer);
+int checks(char **tokens, char *buffer, char **paths);
 int ch_dir(char **token);
 void prompt(void);
 int _setenv(char **tokens);
@@ -40,5 +41,6 @@ char _is_seperator(char *args);
 void _execute_seperators(char **paths, char *buffer, char seperator, char *delim);
 int Ex_it(char *str);
 int _atoi(char *num);
+void clean_execution(char **args);
 
 #endif

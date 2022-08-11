@@ -2,20 +2,23 @@
 
 /**
  * _execute_seperators - execute the different commands
- * @args: the arguments
+ * @paths: paths to env vars
+ * @buffer: command input
+ * @sp: command seperator
+ * @delim: delimiter
  * Return: void
  */
-void _execute_seperators(char **paths, char *buffer, char seperator, char *delim)
+void _execute_seperators(char **paths, char *buffer, char sp, char *delim)
 {
 	char ***commands;
 	char *seperators;
 	int status, i;
 
-	seperators = malloc(2 * sizeof(seperator));
-	seperators[0] = seperator;
+	seperators = malloc(2 * sizeof(sp));
+	seperators[0] = sp;
 	i = 0;
 	commands = _seperator(paths, buffer, seperators, delim);
-	if (seperator == '|')
+	if (sp == '|')
 	{
 
 		while ((status = _execve(commands[i])) != 0 && commands[i] != NULL)
@@ -23,12 +26,12 @@ void _execute_seperators(char **paths, char *buffer, char seperator, char *delim
 			i++;
 		}
 	}
-	else if (seperator == '&')
+	else if (sp == '&')
 	{
 		while ((status = _execve(commands[i])) == 0 && commands[i] != NULL)
 			i++;
 	}
-	else if (seperator == ';')
+	else if (sp == ';')
 	{
 		while (commands[i] != NULL)
 		{
@@ -37,4 +40,9 @@ void _execute_seperators(char **paths, char *buffer, char seperator, char *delim
 		}
 	}
 	free(seperators);
+	i = 0;
+	while (commands[i] != NULL)
+	{
+		i++;
+	}
 }

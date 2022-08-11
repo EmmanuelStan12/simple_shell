@@ -15,13 +15,13 @@ char **tokenize(int size, char *path, char *delimiter)
 
 	i = 0;
 	command = strdup(path);
-	paths = malloc(sizeof(char *) * (size + 1));
+	paths = malloc(sizeof(char *) * (size));
 	while ((command = strtok(command, delimiter)) != NULL)
 	{
 		paths[i] = command;
 		command = NULL;
 		i++;
 	}
-	paths[i] = NULL;
 	return (paths);
+	free(paths);
 }

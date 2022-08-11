@@ -4,52 +4,53 @@
 * checks - checks for exit, path command, and env commands
 * @tokens: tokenized input from user
 * @buffer: user's input
+* @paths: paths
 * Return: 0, 1 Or 2
 */
-int checks(char **tokens, char *buffer)
+int checks(char **tokens, char *buffer, char **paths)
 {
-	int i, j, k, e, u;
+	int code;
 
 	if (feof(stdin))
 		_exit(98);
 	if (tokens[0] == NULL)
 		return (1);
-	i = strcmp(tokens[0], "exit");
-	j = strcmp(tokens[0], "env");
-	k = strcmp(tokens[0], "cd");
-	e = strcmp(tokens[0], "setenv");
-	u = strcmp(tokens[0], "unsetenv");
-	if (i == 0)
+	if (strcmp(tokens[0], "exit") == 0)
 	{
-		if (Ex_it(tokens[1]) == 1)
-			return (1);
+		code = Ex_it(tokens[1]);
+		if (code != 1)
+		{
+			free(tokens);
+			free(buffer);
+			exit(code);
+		}
+		return (1);
 	}
-	else if (j == 0)
+	else if (strcmp(tokens[0], "env") == 0)
 	{
 		print_env();
 		return (1);
 	}
-	else if (k == 0)
+	else if (strcmp(tokens[0], "cd") == 0)
 	{
 		if (ch_dir(tokens) == 1)
-		return (1);
+			return (1);
 	}
 	else if (buffer[0] == '/')
 		return (2);
-	else if (e == 0)
+	else if (strcmp(tokens[0], "setenv") == 0)
 	{
-		if (_setenv(tokens) != 0)
-			perror("Invalid arguments...");
+		_setenv(tokens);
 		return (1);
 	}
-	else if (u == 0)
+	else if (strcmp(tokens[0], "unsetenv") == 0)
 	{
-		if (_unsetenv(tokens) != 0)
-			perror("Invalid arguments...");
+		_unsetenv(tokens);
 		return (1);
 	}
 	return (0);
 }
+
 /**
 * free_ptr - frees an array
 * @ptr: array to be freed
