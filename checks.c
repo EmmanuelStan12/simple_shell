@@ -22,6 +22,7 @@ int checks(char **tokens, char *buffer, char **paths)
 		{
 			free(tokens);
 			free(buffer);
+			free(paths);
 			exit(code);
 		}
 		return (1);

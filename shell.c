@@ -48,7 +48,7 @@ void s_shell(int i, char **paths, char **argv)
  */
 int main(int argc, char **argv)
 {
-	char *buffer = NULL, **paths, *path,  *command = NULL, *delim = " \n\t\r:";
+	char *buffer = NULL, **paths, *path, *delim = " \n\t\r:";
 	int path_size, i, n;
 	size_t buf_size = 0;
 
