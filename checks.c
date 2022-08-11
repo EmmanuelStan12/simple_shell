@@ -33,10 +33,8 @@ int checks(char **tokens, char *buffer, char **paths)
 		return (1);
 	}
 	else if (strcmp(tokens[0], "cd") == 0)
-	{
 		if (ch_dir(tokens) == 1)
 			return (1);
-	}
 	else if (buffer[0] == '/')
 		return (2);
 	else if (strcmp(tokens[0], "setenv") == 0)

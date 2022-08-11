@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * sub_shell - part of the main shell
+ * s_shell - part of the main shell
  * @i: index
  * @paths: env paths
  * @argv: arguments
