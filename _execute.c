@@ -14,7 +14,7 @@ int _execve(char **argv)
 	if (pid == 0)
 	{
 		status = execve(argv[0], argv, environ);
-		perror("unknown command");
+		printf("%s: 1: %s: not found\n", argv[0], argv[1]);
 		exit(1);
 	}
 	else
