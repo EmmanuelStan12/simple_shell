@@ -14,7 +14,7 @@ int _execve(char **argv)
 	if (pid == 0)
 	{
 		status = execve(argv[0], argv, environ);
-		perror("unknown command");
+		exec_err(argv[0]);
 		exit(1);
 	}
 	else

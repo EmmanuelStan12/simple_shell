@@ -28,13 +28,13 @@ int _atoi(char *s)
 * @str: exit status
 * Return: 1
 */
-int Ex_it(char *str)
+int Ex_it(char **argv)
 {
 	int i = 0, flag = 0, code;
 	char *dup = NULL;
 
-	dup = str;
-	if (str == NULL)
+	dup = argv[1];
+	if (argv[1] == NULL)
 	{
 		return (127);
 	}
@@ -50,7 +50,7 @@ int Ex_it(char *str)
 	code = _atoi(dup);
 	if (flag == -1)
 	{
-		write(STDERR_FILENO, "invalid number: argument should be of type int\n", 47);
+		exit_err(argv);
 		return (1);
 	}
 	return (code);

@@ -1,5 +1,7 @@
 #include "shell.h"
 
+int ERR_COUNT = 0;
+
 /**
  * s_shell - part of the main shell
  * @i: index
@@ -23,7 +25,7 @@ void s_shell(int i, char **paths, char **argv)
 		}
 		else
 		{
-			perror(COMMAND_NOT_FOUND);
+			sh_command_err(argv);
 			return;
 		}
 	}
@@ -31,15 +33,14 @@ void s_shell(int i, char **paths, char **argv)
 	{
 		if (access(argv[0], F_OK | X_OK) != 0)
 		{
+			sh_command_err(argv);
 			free(argv);
-			perror(COMMAND_NOT_FOUND);
 			return;
 		}
 	}
 	_execve(argv);
 	clean_execution(argv);
 }
-
 /**
  * main - Entry point
  * @argc: the number of arguments
@@ -59,6 +60,7 @@ int main(int argc, char **argv)
 	{
 		char seperator;
 
+		ERR_COUNT++;
 		prompt();
 		n = getline(&buffer, &buf_size, stdin);
 		if (strlen(buffer) == 1 && (n != -1))

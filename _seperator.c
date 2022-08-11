@@ -36,11 +36,11 @@ char ***_seperator(char **paths, char *args, char *seperator, char *delim)
 				free(command);
 			}
 			else
-				perror(COMMAND_NOT_FOUND);
+				sh_command_err(arguments[i]);
 		}
 		else if (status == 2)
 			if (access(arguments[i][0], F_OK | X_OK) != 0)
-				perror(COMMAND_NOT_FOUND);
+				sh_command_err(arguments[i]);
 		i++;
 	}
 	return (arguments);

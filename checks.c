@@ -41,7 +41,7 @@ int checks(char **tokens, char *buffer, char **paths)
 		return (1);
 	if (strcmp(tokens[0], "exit") == 0)
 	{
-		code = Ex_it(tokens[1]);
+		code = Ex_it(tokens);
 		if (code != 1)
 		{
 			free_all(buffer, tokens, paths);

@@ -61,6 +61,11 @@ int ch_dir(char **token)
 	}
 	else
 		dir = token[1];
+	if (access(dir, F_OK) == 0)
+	{
+		if (access(dir, X_OK) != 0)
+			access_err(dir);
+	}
 	if (chdir(dir) == -1)
 	{
 		perror(dir);
