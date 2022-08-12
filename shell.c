@@ -51,7 +51,7 @@ void handle_terminal(char **argv, char *buf, char **paths)
 			command = malloc(sizeof(char *) * 2);
 			command[0] = argv[i];
 			command[1] = NULL;
-			checks(command, buf, paths);
+			checks(command, buf, paths, 1);
 			_execve(command);
 			free(argv[i]);
 			free(command);
@@ -153,7 +153,7 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			i = checks(argv, buffer, paths);
+			i = checks(argv, buffer, paths, mode);
 			s_shell(filename, i, buffer, paths, argv, mode);
 		}
 	}

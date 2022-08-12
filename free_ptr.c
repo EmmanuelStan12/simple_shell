@@ -9,12 +9,14 @@ void free_ptr(char **ptr)
 {
 	int i;
 
-	i = 0;
-	while (ptr[i])
-	{
-		free(ptr[i]);
-		i++;
-	}
 	if (ptr)
+	{
+		i = 0;
+		while (ptr[i])
+		{
+			free(ptr[i]);
+			i++;
+		}
 		free(ptr);
+	}
 }

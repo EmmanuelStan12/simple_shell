@@ -53,22 +53,39 @@ void handle_exit(char **argv, char *buffer, char **paths)
 }
 
 /**
+ * handle_env - handles exit
+ * @argv: arguments
+ * @buffer: buffer
+ * @paths: paths
+ * Return: void
+ */
+void handle_env(char **argv, char *buffer, char **paths)
+{
+	print_env();
+	free(buffer);
+	free_ptr(paths);
+	free_ptr(argv);
+	exit(0);
+}
+/**
 * checks - checks for exit, path command, and env commands
 * @tokens: tokenized input from user
 * @buffer: user's input
 * @paths: paths
+* @m: mode
 * Return: 0, 1 Or 2
 */
-int checks(char **tokens, char *buffer, char **paths)
+int checks(char **tokens, char *buffer, char **paths, int m)
 {
 	if (tokens[0] == NULL)
 		return (1);
 	if (has_exit(tokens) == 1)
-	{
 		handle_exit(tokens, buffer, paths);
-	}
 	else if (strcmp(tokens[0], "env") == 0)
 	{
+		if (m != 1)
+			handle_env(tokens, buffer, paths);
+		print_env();
 		return (1);
 	}
 	else if (strcmp(tokens[0], "cd") == 0)

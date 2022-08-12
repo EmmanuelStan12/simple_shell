@@ -34,7 +34,7 @@ int if_path(char *buffer);
 int check_exit(char **tokens, char **paths, char *buffer);
 void free_ptr(char **ptr);
 char *get_path(char **paths, char *token);
-int checks(char **tokens, char *buffer, char **paths);
+int checks(char **tokens, char *buffer, char **paths, int m);
 int ch_dir(char **token);
 void prompt(void);
 int _setenv(char **tokens);
