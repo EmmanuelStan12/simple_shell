@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 	paths = tokenize(path_size, path, ":");
 	while (1)
 	{
-		prompt();
+//		prompt();
 		n = getline(&buffer, &buf_size, stdin);
 		if (strlen(buffer) == 1 && (n != -1))
 			continue;
