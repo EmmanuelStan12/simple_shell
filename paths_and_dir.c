@@ -9,35 +9,38 @@
 char *get_path(char **paths, char *token)
 {
 	int i, j, path_len, command_len, len;
-	char *path;
+	char *path = NULL;
 
-	for (i = 0; paths[i] != NULL; i++)
+	if (paths)
 	{
-		path_len = strlen(paths[i]);
-		command_len = strlen(token);
-		len = (path_len + command_len);
-		path = malloc(sizeof(char) * (len + 2));
-		if (path == NULL)
+		for (i = 0; paths[i] != NULL; i++)
 		{
-			return (NULL);
+			path_len = strlen(paths[i]);
+			command_len = strlen(token);
+			len = (path_len + command_len);
+			path = malloc(sizeof(char) * (len + 2));
+			if (path == NULL)
+			{
+				return (NULL);
+			}
+			j = 0;
+			while (j < path_len)
+			{
+				path[j] = paths[i][j];
+				j++;
+			}
+			path[j] = '/';
+			j = 0;
+			while (j < command_len)
+			{
+				path[path_len + j + 1] = token[j];
+				j++;
+			}
+			path[len + 1] = '\0';
+			if (access(path, F_OK & X_OK) == 0)
+				return (path);
+			free(path);
 		}
-		j = 0;
-		while (j < path_len)
-		{
-			path[j] = paths[i][j];
-			j++;
-		}
-		path[j] = '/';
-		j = 0;
-		while (j < command_len)
-		{
-			path[path_len + j + 1] = token[j];
-			j++;
-		}
-		path[len + 1] = '\0';
-		if (access(path, F_OK & X_OK) == 0)
-			return (path);
-		free(path);
 	}
 	return (NULL);
 }

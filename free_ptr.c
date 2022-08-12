@@ -15,5 +15,6 @@ void free_ptr(char **ptr)
 		free(ptr[i]);
 		i++;
 	}
-	free(ptr);
+	if (ptr)
+		free(ptr);
 }

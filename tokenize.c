@@ -9,22 +9,25 @@
  */
 char **tokenize(int size, char *path, char *delimiter)
 {
-	char **paths;
+	char **paths = NULL;
 	int i;
 	char *command, *holder;
 
-	i = 0;
-	holder = strdup(path);
-	command = holder;
-	paths = malloc(sizeof(char *) * (size + 1));
-	command = strtok(command, delimiter);
-	while (command)
+	if (path)
 	{
-		paths[i] = strdup(command);
-		command = strtok(NULL, delimiter);
-		i++;
+		i = 0;
+		holder = strdup(path);
+		command = holder;
+		paths = malloc(sizeof(char *) * (size + 1));
+		command = strtok(command, delimiter);
+		while (command)
+		{
+			paths[i] = strdup(command);
+			command = strtok(NULL, delimiter);
+			i++;
+		}
+		paths[i] = NULL;
+		free(holder);
 	}
-	paths[i] = NULL;
-	free(holder);
 	return (paths);
 }

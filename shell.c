@@ -16,7 +16,8 @@ void free_all(char **av, char **pts, char *buf, int m, int c)
 	if (m != 1)
 	{
 		free(buf);
-		free_ptr(pts);
+		if (pts)
+			free_ptr(pts);
 		exit(c);
 	}
 }

@@ -12,24 +12,27 @@ int token_size(char *str, char *delimiter)
 	char *buffer, *holder;
 
 	size = 0;
-	buffer = strdup(str);
-	holder = buffer;
-	while (*holder != '\0' && *holder != EOF)
+	if (str)
 	{
-		if (strchr(delimiter, *holder) != NULL && flag == 0)
+		buffer = strdup(str);
+		holder = buffer;
+		while (*holder != '\0' && *holder != EOF)
 		{
+			if (strchr(delimiter, *holder) != NULL && flag == 0)
+			{
+				size++;
+				flag = 1;
+			}
+			else if (strchr(delimiter, *holder) == NULL && flag == 1)
+			{
+				flag = 0;
+			}
+			holder++;
+		}
+		holder--;
+		if (strchr(delimiter, *holder) == NULL)
 			size++;
-			flag = 1;
-		}
-		else if (strchr(delimiter, *holder) == NULL && flag == 1)
-		{
-			flag = 0;
-		}
-		holder++;
+		free(buffer);
 	}
-	holder--;
-	if (strchr(delimiter, *holder) == NULL)
-		size++;
-	free(buffer);
 	return (size);
 }
