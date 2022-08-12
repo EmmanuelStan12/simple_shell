@@ -9,8 +9,6 @@
 */
 int checks(char **tokens, char *buffer, char **paths)
 {
-	if (feof(stdin))
-		_exit(98);
 	if (tokens[0] == NULL)
 		return (1);
 	if (strcmp(tokens[0], "exit") == 0)
@@ -27,7 +25,7 @@ int checks(char **tokens, char *buffer, char **paths)
 	else if (strcmp(tokens[0], "cd") == 0)
 	{
 	}
-	else if (buffer[0] == '/')
+	else if (buffer[0] == '/' || buffer[0] == '.')
 		return (2);
 	else if (strcmp(tokens[0], "setenv") == 0)
 	{

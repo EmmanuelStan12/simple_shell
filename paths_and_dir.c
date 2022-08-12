@@ -6,7 +6,7 @@
 * @tokens: tokenized input from user
 * Return: address of the path
 */
-char *get_path(char **paths, char **tokens)
+char *get_path(char **paths, char *token)
 {
 	int i, j, path_len, command_len, len;
 	char *path;
@@ -14,7 +14,7 @@ char *get_path(char **paths, char **tokens)
 	for (i = 0; paths[i] != NULL; i++)
 	{
 		path_len = strlen(paths[i]);
-		command_len = strlen(tokens[0]);
+		command_len = strlen(token);
 		len = (path_len + command_len);
 		path = malloc(sizeof(char) * (len + 2));
 		if (path == NULL)
@@ -31,11 +31,11 @@ char *get_path(char **paths, char **tokens)
 		j = 0;
 		while (j < command_len)
 		{
-			path[path_len + j + 1] = tokens[0][j];
+			path[path_len + j + 1] = token[j];
 			j++;
 		}
 		path[len + 1] = '\0';
-		if (access(path, F_OK | X_OK) == 0)
+		if (access(path, F_OK & X_OK) == 0)
 			return (path);
 		free(path);
 	}
