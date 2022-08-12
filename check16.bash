@@ -2,7 +2,7 @@
 
 ################################################################################
 # Description for the intranet check (one line, support Markdown syntax)
-# Spaces only (medium)
+# Set PATH to be an empty string and execute `ls`
 
 ################################################################################
 # The variable 'compare_with_sh' IS OPTIONNAL
@@ -21,7 +21,7 @@
 # as follows: "echo $shell_input | ./hsh"
 #
 # It can be empty and multiline
-shell_input="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               "
+shell_input="ls"
 
 ################################################################################
 # The variable 'shell_params' IS OPTIONNAL
@@ -41,6 +41,9 @@ shell_input="                                                                   
 # Return value: Discarded
 function check_setup()
 {
+	OLDPATH="$PATH"
+	export PATH=""
+
 	return 0
 }
 
@@ -81,6 +84,8 @@ function sh_setup()
 function check_callback()
 {
 	status=$1
+
+	export PATH="$OLDPATH"
 
 	return $status
 }

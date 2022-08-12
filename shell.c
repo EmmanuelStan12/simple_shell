@@ -1,49 +1,30 @@
 #include "shell.h"
 
 /**
- * s_shell - part of the main shell
- * @i: index
- * @paths: env paths
+ * free_all - frees memory
  * @argv: arguments
- * @filename: the name of the file
+ * @paths: paths
+ * @buffer: buffer
+ * @mode: mode
+ * @c: code
  * Return: void
  */
-void s_shell(char *filename, int i, char **paths, char **argv)
+void free_all(char **av, char **pts, char *buf, int m, int c)
 {
-	char *command;
-
-	if (i == 1)
-		return;
-	else if (i == 0)
+	if (av)
+		free_ptr(av);
+	if (m != 1)
 	{
-		command = get_path(paths, argv);
-		if (command != NULL)
-		{
-			free(argv[0]);
-			argv[0] = command;
-		}
-		else
-		{
-			printf("%s: %s\n", filename, COMMAND_NOT_FOUND);
-			return;
-		}
+		free(buf);
+		free_ptr(pts);
+		exit(c);
 	}
-	else if (i == 2)
-	{
-		if (access(argv[0], F_OK | X_OK) != 0)
-		{
-			free_ptr(argv);
-			printf("%s: %s\n", filename, COMMAND_NOT_FOUND);
-			return;
-		}
-	}
-	_execve(argv);
-	free_ptr(argv);
 }
 
 /**
  * handle_terminal - handles terminal input
  * @argv: arguments
+ * @paths: paths
  * Return: void
  */
 void handle_terminal(char **argv)
@@ -78,6 +59,65 @@ void handle_terminal(char **argv)
 }
 
 /**
+ * s_shell - part of the main shell
+ * @i: index
+ * @paths: env paths
+ * @argv: arguments
+ * @fname: the name of the file
+ * @buf: buffer
+ * @m: mode
+ * Return: void
+ */
+void s_shell(char *fname, int i, char *buf, char **paths, char **argv, int m)
+{
+	char *command;
+
+	if (i == 1)
+	{
+		free_all(argv, paths, buf, m, 0);
+		return;
+	}
+	else if (i == 0)
+	{
+		command = get_path(paths, argv[0]);
+		if (command != NULL)
+		{
+			free(argv[0]);
+			argv[0] = command;
+			_execve(argv);
+			free_all(argv, paths, buf, m, 0);
+		}
+		else
+		{
+			fprintf(stderr, "%s: %d: %s: not found\n", fname,1, argv[0]);
+			free_all(argv, paths, buf, m, 127);
+		}
+	}
+	else if (i == 2)
+	{
+		int ack = access(argv[0], F_OK | X_OK);
+
+		if (ack != 0 && m == 1)
+		{
+			free_ptr(argv);
+			fprintf(stderr, "%s: %d: %s: not found\n", fname, 1, argv[0]);
+			return;
+		}
+		else if (m != 1)
+		{
+			if (ack == 0)
+				_execve(argv);
+			else
+			{
+				printf("%s: %s\n", fname, COMMAND_NOT_FOUND);
+				free_ptr(argv);
+			}
+			free_all(argv, paths, buf, m, 0);
+		}
+	}
+}
+
+/**
  * main - Entry point
  * @argc: the number of arguments
  * @argv: the arguments
@@ -86,7 +126,7 @@ void handle_terminal(char **argv)
 int main(int argc, char **argv)
 {
 	char *buffer = NULL, **paths, *path, *delim = " \n\t\r:";
-	int path_size, i, n, int_mode = 1;
+	int path_size, i, n, mode = 1;
 	size_t buf_size = 0;
 	char *filename = argv[0];
 
@@ -95,26 +135,28 @@ int main(int argc, char **argv)
 	paths = tokenize(path_size, path, ":");
 	while (1)
 	{
-		int_mode = isatty(STDIN_FILENO);
-		if (int_mode == 1)
+		mode = isatty(STDIN_FILENO);
+		if (mode == 1)
+		{
 			printf("[%s]$ ", getenv("USER"));
-		n = getdelim(&buffer, &buf_size, '\0', stdin);
-		buffer = analyze_string(buffer);
+			n = getline(&buffer, &buf_size, stdin);
+		}
+		else
+			n = getdelim(&buffer, &buf_size, '\0', stdin);
 		if (strlen(buffer) == 1 && (n != -1))
 			continue;
+		buffer = analyze_string(buffer);
 		argc = token_size(buffer, delim);
 		argv = tokenize(argc, buffer, delim);
-		if (int_mode == 1)
+		if (argc > 1 && check_input(paths, &argv, argc) && mode != 1)
 		{
-			i = checks(argv, buffer, paths);
-			s_shell(filename, i, paths, argv);
+			handle_terminal(argv);
+			free_all((char **)NULL, paths, buffer, mode, 0);
 		}
 		else
 		{
-			handle_terminal(argv);
-			free(buffer);
-			free_ptr(paths);
-			exit(0);
+			i = checks(argv, buffer, paths);
+			s_shell(filename, i, buffer, paths, argv, mode);
 		}
 	}
 	free_ptr(paths);

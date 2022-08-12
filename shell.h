@@ -33,7 +33,7 @@ int blank_input(char *buffer);
 int if_path(char *buffer);
 int check_exit(char **tokens, char **paths, char *buffer);
 void free_ptr(char **ptr);
-char *get_path(char **paths, char **tokens);
+char *get_path(char **paths, char *token);
 int checks(char **tokens, char *buffer, char **paths);
 int ch_dir(char **token);
 void prompt(void);
@@ -46,5 +46,6 @@ int Ex_it(char *str);
 int _atoi(char *num);
 void clean_execution(char **args);
 char *analyze_string(char *buffer);
+int check_input(char **paths, char ***argv, int size);
 
 #endif
