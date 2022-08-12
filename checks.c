@@ -31,18 +31,25 @@ void handle_exit(char **argv, char *buffer, char **paths)
 
 	for (i = 0; argv[i] != NULL; i++)
 		;
-	commands = malloc(i * sizeof(char *));
-	for (j = 0; j < (i - 1); j++)
+	if (i != 1)
 	{
-		commands[j] = argv[j];
+		commands = malloc(i * sizeof(char *));
+		for (j = 0; j < (i - 1); j++)
+		{
+			commands[j] = argv[j];
+		}
+		commands[j] = NULL;
+		_execve(commands);
+		free(buffer);
+		free_ptr(paths);
+		free_ptr(argv);
+		free(commands);
+		exit(2);
 	}
-	commands[j] = NULL;
-	_execve(commands);
 	free(buffer);
 	free_ptr(paths);
 	free_ptr(argv);
-	free(commands);
-	exit(2);
+	exit(0);
 }
 
 /**
