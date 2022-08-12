@@ -11,7 +11,7 @@ int checks(char **tokens, char *buffer)
 	int i, j, k, e, u;
 
 	if (feof(stdin))
-		_exit(98);
+		_exit(0);
 	if (tokens[0] == NULL)
 		return (1);
 	i = strcmp(tokens[0], "exit");
