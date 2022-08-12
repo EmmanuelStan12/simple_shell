@@ -2,8 +2,9 @@
 
 /**
  * check_input - checks whether the input are commands only
- * @argv: the commands
+ * @args: the commands
  * @paths: the paths
+ * @size: the size
  * Return: the arguments
  */
 int check_input(char **paths, char ***args, int size)
@@ -26,7 +27,7 @@ int check_input(char **paths, char ***args, int size)
 		else
 		{
 			char *command = get_path(paths, tokens[i]);
-			
+
 			if (command)
 			{
 				free(tokens[i]);

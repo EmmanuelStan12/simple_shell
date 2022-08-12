@@ -3,7 +3,7 @@
 /**
 * get_path - gets the path of a given command
 * @paths: directories in the path
-* @tokens: tokenized input from user
+* @token: tokenized input from user
 * Return: address of the path
 */
 char *get_path(char **paths, char *token)

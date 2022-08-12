@@ -2,10 +2,10 @@
 
 /**
  * free_all - frees memory
- * @argv: arguments
- * @paths: paths
- * @buffer: buffer
- * @mode: mode
+ * @av: arguments
+ * @pts: paths
+ * @buf: buffer
+ * @m: mode
  * @c: code
  * Return: void
  */
@@ -24,7 +24,6 @@ void free_all(char **av, char **pts, char *buf, int m, int c)
 /**
  * handle_terminal - handles terminal input
  * @argv: arguments
- * @paths: paths
  * Return: void
  */
 void handle_terminal(char **argv)
@@ -70,8 +69,6 @@ void handle_terminal(char **argv)
  */
 void s_shell(char *fname, int i, char *buf, char **paths, char **argv, int m)
 {
-	char *command;
-
 	if (i == 1)
 	{
 		free_all(argv, paths, buf, m, 0);
@@ -79,7 +76,8 @@ void s_shell(char *fname, int i, char *buf, char **paths, char **argv, int m)
 	}
 	else if (i == 0)
 	{
-		command = get_path(paths, argv[0]);
+		char *command = get_path(paths, argv[0]);
+
 		if (command != NULL)
 		{
 			free(argv[0]);
@@ -89,7 +87,7 @@ void s_shell(char *fname, int i, char *buf, char **paths, char **argv, int m)
 		}
 		else
 		{
-			fprintf(stderr, "%s: %d: %s: not found\n", fname,1, argv[0]);
+			fprintf(stderr, "%s: %d: %s: not found\n", fname, 1, argv[0]);
 			free_all(argv, paths, buf, m, 127);
 		}
 	}
@@ -101,17 +99,13 @@ void s_shell(char *fname, int i, char *buf, char **paths, char **argv, int m)
 		{
 			free_ptr(argv);
 			fprintf(stderr, "%s: %d: %s: not found\n", fname, 1, argv[0]);
-			return;
 		}
 		else if (m != 1)
 		{
 			if (ack == 0)
 				_execve(argv);
 			else
-			{
 				printf("%s: %s\n", fname, COMMAND_NOT_FOUND);
-				free_ptr(argv);
-			}
 			free_all(argv, paths, buf, m, 0);
 		}
 	}
