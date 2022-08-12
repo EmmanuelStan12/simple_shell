@@ -1,6 +1,51 @@
 #include "shell.h"
 
 /**
+ * has_exit - has exits
+ * @argv: arguments
+ * Return: int
+ */
+int has_exit(char **argv)
+{
+	int i, is_exit = 0;
+
+	for (i = 0; argv[i] != NULL; i++)
+	{
+		if (strcmp(argv[i], "exit") == 0)
+			is_exit = 1;
+	}
+	return (is_exit);
+}
+
+/**
+ * handle_exit - handles exit
+ * @argv: arguments
+ * @buffer: buffer
+ * @paths: paths
+ * Return: void
+ */
+void handle_exit(char **argv, char *buffer, char **paths)
+{
+	int i, j;
+	char **commands;
+
+	for (i = 0; argv[i] != NULL; i++)
+		;
+	commands = malloc(i * sizeof(char *));
+	for (j = 0; j < (i - 1); j++)
+	{
+		commands[j] = argv[j];
+	}
+	commands[j] = NULL;
+	_execve(commands);
+	free(buffer);
+	free_ptr(paths);
+	free_ptr(argv);
+	free(commands);
+	exit(2);
+}
+
+/**
 * checks - checks for exit, path command, and env commands
 * @tokens: tokenized input from user
 * @buffer: user's input
@@ -11,12 +56,9 @@ int checks(char **tokens, char *buffer, char **paths)
 {
 	if (tokens[0] == NULL)
 		return (1);
-	if (strcmp(tokens[0], "exit") == 0)
+	if (has_exit(tokens) == 1)
 	{
-		free(buffer);
-		free_ptr(paths);
-		free_ptr(tokens);
-		exit(127);
+		handle_exit(tokens, buffer, paths);
 	}
 	else if (strcmp(tokens[0], "env") == 0)
 	{

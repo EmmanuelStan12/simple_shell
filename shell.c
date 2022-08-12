@@ -25,9 +25,11 @@ void free_all(char **av, char **pts, char *buf, int m, int c)
 /**
  * handle_terminal - handles terminal input
  * @argv: arguments
+ * @buf: buffer
+ * @paths: paths
  * Return: void
  */
-void handle_terminal(char **argv)
+void handle_terminal(char **argv, char *buf, char **paths)
 {
 	int i;
 	char **command;
@@ -49,6 +51,7 @@ void handle_terminal(char **argv)
 			command = malloc(sizeof(char *) * 2);
 			command[0] = argv[i];
 			command[1] = NULL;
+			checks(command, buf, paths);
 			_execve(command);
 			free(argv[i]);
 			free(command);
@@ -145,7 +148,7 @@ int main(int argc, char **argv)
 		argv = tokenize(argc, buffer, delim);
 		if (argc > 1 && check_input(paths, &argv, argc) && mode != 1)
 		{
-			handle_terminal(argv);
+			handle_terminal(argv, buffer, paths);
 			free_all((char **)NULL, paths, buffer, mode, 0);
 		}
 		else
